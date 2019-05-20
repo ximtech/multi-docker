@@ -1,0 +1,52 @@
+- pipeline: "Multi-docker build pipeline"
+  trigger_mode: "ON_EVERY_PUSH"
+  ref_name: "master"
+  ref_type: "BRANCH"
+  trigger_condition: "ALWAYS"
+  actions:
+
+  - action: "Build Docker image"
+    type: "DOCKERFILE"
+    dockerfile_path: "client/Dockerfile.dev"
+    context_path: "client/"
+    trigger_condition: "ALWAYS"
+
+  - action: "Run dev test in docker container"
+    type: "RUN_DOCKER_CONTAINER"
+    use_image_from_action: true
+    inline_commands: "npm test -- --coverage"
+    mount_filesystem_disable: true
+    mount_filesystem_path: "/buddy/multi-docker"
+    shell: "SH"
+    trigger_condition: "ALWAYS"
+
+  - action: "Build Docker image for client"
+    type: "DOCKERFILE"
+    dockerfile_path: "client/Dockerfile"
+    target_stage: "stason/client"
+    trigger_condition: "ALWAYS"
+
+  - action: "Build Docker image for nginx"
+    type: "DOCKERFILE"
+    dockerfile_path: "nginx/Dockerfile"
+    target_stage: "stason/nginx"
+    trigger_condition: "ALWAYS"
+
+  - action: "Build Docker image for server"
+    type: "DOCKERFILE"
+    dockerfile_path: "server/Dockerfile"
+    target_stage: "stason/server"
+    trigger_condition: "ALWAYS"
+
+  - action: "Build Docker image for worker"
+    type: "DOCKERFILE"
+    dockerfile_path: "worker/Dockerfile"
+    target_stage: "stason/worker"
+    trigger_condition: "ALWAYS"
+    
+  - action: "Push Docker image"
+    type: "DOCKER_PUSH"
+    login: "ximtech"
+    password: "secure!mmC2/SFW2+O/137NqDT/9w=="
+    docker_image_tag: "stason/client,stason/ngnix,stason/server,stason/worker"
+    trigger_condition: "ALWAYS"
