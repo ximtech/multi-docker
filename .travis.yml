@@ -18,14 +18,14 @@ after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
   #Take those images and push them to docker hub
-  - docker tag stason/multi-client ximtech/stason:multi-client
-  - docker push ximtech/stason:multi-client
+  - docker tag stason/multi-client ximtech/stason
+  - docker push ximtech/stason
 
-  - docker tag stason/multi-nginx ximtech/stason:multi-nginx
-  - docker push ximtech/stason:multi-nginx
+  - docker tag stason/multi-nginx ximtech/stason
+  - docker push ximtech/stason
 
-  - docker tag stason/multi-server ximtech/stason:multi-server
-  - docker push ximtech/stason:multi-server
+  - docker tag stason/multi-server ximtech/stason
+  - docker push ximtech/stason
 
-  - docker tag stason/multi-server ximtech/stason:multi-worker
-  - docler push ximtech/stason:multi-worker
+  - docker tag stason/multi-server ximtech/stason
+  - docker push ximtech/stason
