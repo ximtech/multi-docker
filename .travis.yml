@@ -9,7 +9,7 @@ script:
   - docker run stason/react-test npm test -- --coverage
 
 after_success:
-  - docker build -t stason/multi-client ./client
+  - docker build -t stason/multi-client:latest ./client
   - docker build -t stason/multi-ngnix ./ngnix
   - docker build -t stason/multi-server ./server
   - docker build -t stason/multi-worker ./worker
