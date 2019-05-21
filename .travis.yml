@@ -9,7 +9,7 @@ script:
   - docker run stason/react-test npm test -- --coverage
 
 after_success:
-  - docker build -t stason/multi-client:latest ./client
+  - docker build -t stason/multi-client ./client
   - docker build -t stason/multi-ngnix ./ngnix
   - docker build -t stason/multi-server ./server
   - docker build -t stason/multi-worker ./worker
@@ -18,15 +18,7 @@ after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
   #Take those images and push them to docker hub
-  - docker commit stason/multi-client:latest stason/multi-client
-  - docker tag stason/multi-client ximtech/stason/multi-client
-  - docker push ximtech/stason/multi-client
-
-  # - docker tag stason/multi-nginx ximtech/stason
-  # - docker push ximtech/stason
-
-  # - docker tag stason/multi-server ximtech/stason
-  # - docker push ximtech/stason
-
-  # - docker tag stason/multi-server ximtech/stason
-  # - docker push ximtech/stason
+  - docker push stason/multi-client
+  - docker push stason/multi-nginx
+  - docker push stason/multi-server
+  - docker push stason/multi-worker
