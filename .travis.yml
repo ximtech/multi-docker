@@ -9,8 +9,8 @@ script:
   - docker run stason/react-test npm test -- --coverage
 
 after_success:
-  - sudo docker build -t stason/multi-client ./client
-  - sudo docker build -t stason/multi-ngnix ./ngnix
+  - docker build -t stason/multi-client ./client
+  - docker build -t stason/multi-nginx ./nginx
   - docker build -t stason/multi-server ./server
   - docker build -t stason/multi-worker ./worker
 
@@ -21,8 +21,8 @@ after_success:
   - docker tag stason/multi-client ximtech/stason:multi-client
   - docker push ximtech/stason:multi-client
 
-  - docker tag stason/multi-nginx ximtech/stason:multi-ngnix
-  - docker push ximtech/stason:multi-ngnix
+  - docker tag stason/multi-nginx ximtech/stason:multi-nginx
+  - docker push ximtech/stason:multi-nginx
 
   - docker tag stason/multi-server ximtech/stason:multi-server
   - docker push ximtech/stason:multi-server
